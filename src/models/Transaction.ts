@@ -1,17 +1,36 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+import Category from './Category';
+
+@Entity('transactions')
 class Transaction {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   title: string;
 
+  @Column()
   type: 'income' | 'outcome';
 
+  @Column('decimal')
   value: number;
 
-  category_id: string;
+  @ManyToOne(() => Category, { eager: true })
+  category: Category;
 
-  created_at: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  updated_at: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
 
 export default Transaction;
